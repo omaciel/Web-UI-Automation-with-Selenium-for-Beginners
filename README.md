@@ -3,21 +3,24 @@
 ## Objective
 
 * Cover Web UI automation using Selenium with a focus on the Python programming language
-* Learn how to easily gather Web UI information, record their actions and play them back via Selenium IDE or Scirocco
-* Write Python code to perform the same actions
-* Run your code with py.test
+* Learn how to easily gather Web UI information, record their actions and play them back via **Selenium IDE** or **Scirocco**
+* Write Python code to perform the same actions interactively
+* Run your code with **py.test**
 * Use **SauceLabs** to execute automated tests on multiple types of operating systems and web browser combinations.
 * Use **Travis** for a Continuous Integration/Delivery process
 
+
 ## Using Selenium IDE
 
-### What is it?
-
-* It is a plugin
-* Only works for Firefox
-  * Can be tricky to install
-  * Does not seem to work with Firefox > 50.0
-* Let's you record your actions while interacting with web browser and reply them
+### Overview
+* Firefox plugin ONLY
+* Can be tricky to install
+* Requires Firefox == 45 or older :/
+* Records all interactions with browser
+* Can replay all recordings
+* Allows for multiple tests to be recorded
+* **GREAT IDE** with tons of useful features
+* Exports test cases into Python code (and other formats)
 * Requires creativity to ensure that playing back activities will wait for web elements to be present
 
 ### How to install it
@@ -26,10 +29,43 @@
   * I recommend version [45](https://ftp.mozilla.org/pub/firefox/releases/45.0/)
 * Install [Selenium IDE](https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/) on your system
 
-### How to use it - Quick demo
+![Selenium IDE](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/selenium_ide.png)
 
+### Demo
+![Selenium IDE demo](https://omaciel.fedorapeople.org/videos/selenium_ide.mov)
+
+### Export
+Selenium IDE will let you export your recording into Python code.
+
+![Selenium IDE export](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/selenium_ide_export.png)
+
+## Using Scirocco Recorder for Chrome
+
+### Overview
+* Easier to install
+* Works with latest Chrome browser
+* Records all interactions with browser
+* Can replay all recordings
+* Not as full fledged IDE as Selenium IDE
+* Limited range of commands
+* Limited options for exporting test cases (Python is NOT supported)
+
+### How to install it
+* Install [Scirocco](https://chrome.google.com/webstore/detail/scirocco-recorder-for-chr/ibclajljffeaafooicpmkcjdnkbaoiih) from the **Google Web Store**
+
+![Scirocco Recorder for Chrome](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/scirocco.png)
+
+### Demo
+![Scirocco demo](https://omaciel.fedorapeople.org/videos/scirocco_ide.mov)
+
+### Export
+Scirocco will let you export your recording.
+
+![Scirocco export](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/scirocco_export.png)
 
 ## Using Selenium with Python
+
+Now we will write actual python code to interact with a web browser.
 
 ### Install the selenium python module
 
@@ -53,6 +89,8 @@ For this tutorial I have chosen to use the web driver for the chrome web browser
 
 ### Interact with Chrome via Python Selenium
 
+Open a python shell:
+
 ```python
 >>> from selenium import webdriver
 >>> from selenium.webdriver.common.keys import Keys
@@ -64,6 +102,7 @@ For this tutorial I have chosen to use the web driver for the chrome web browser
 >>> element.send_keys('Red Hat' + Keys.RETURN)
 >>> assert browser.title.startswith('Red Hat')
 
+>>> browser.get('https://www.google.com')
 >>> element = browser.find_element_by_id('hplogo')
 >>> assert element is not None
 >>> browser.execute_script("arguments[0].setAttribute('srcset', 'https://omaciel.fedorapeople
@@ -71,39 +110,17 @@ For this tutorial I have chosen to use the web driver for the chrome web browser
 >>> browser.execute_script("arguments[0].setAttribute('height', '100%')", element)
 ```
 
+## Demo
+![Demo](https://omaciel.fedorapeople.org/videos/python_plus_selenium.mov)
+
+
 ## Using Python Selenium with Unittest
 
-File: test_SeleniumUnittest.py
+Let's create a couple of automated tests using Python's unittest module:
 
-```python
-import unittest
+File: [test_SeleniumUnittest.py](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/tests/test_SeleniumUnittest.py)
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-
-class GoogleTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.browser = webdriver.Chrome()
-        self.addCleanup(self.browser.quit)
-
-    def testPageTitle(self):
-        self.browser.get('http://www.google.com')
-        self.assertIn('Google', self.browser.title)
-
-    def testSearchPageTitle(self):
-        self.browser.get('http://www.google.com')
-        self.assertIn('Google', self.browser.title)
-        element = self.browser.find_element_by_id('lst-ib')
-        assert element is not None
-        element.send_keys('Red Hat' + Keys.RETURN)
-        assert self.browser.title.startswith('Red Hat')
-
-
-if __name__ == '__main__':
-    unittest.main(verbosity=2)
-```
+![Selenium + Python Unittest](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/python_unittest.png)
 
 Now, execute it:
 
@@ -120,41 +137,17 @@ OK
 
 ## Using Python Selenium with Pytest
 
+Let's do the same exercise, but this time using **pytest**
+
 ### Install pytest
 
 ```shell
 pip install pytest
 ```
 
-File: test_SeleniumPytest.py
+File: [test_SeleniumPytest.py](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/tests/test_SeleniumPytest.py)
 
-```python
-import pytest
-
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-
-@pytest.fixture(scope='session')
-def browser():
-        browser = webdriver.Chrome()
-        yield browser
-        browser.quit()
-
-
-def test_PageTitle(browser):
-    browser.get('http://www.google.com')
-    assert 'Google' in browser.title
-
-
-def test_SearchPageTitle(browser):
-    browser.get('http://www.google.com')
-    assert 'Google' in browser.title
-    element = browser.find_element_by_id('lst-ib')
-    assert element is not None
-    element.send_keys('Red Hat' + Keys.RETURN)
-    assert browser.title.startswith('Red Hat')
-```
+![Selenium + Pytest](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/python_pytest.png)
 
 Now, execute it:
 
@@ -176,6 +169,8 @@ tests/test_SeleniumPytest.py::test_SearchPageTitle PASSED
 
 ## Running All Tests Simultaneously
 
+Now, let's execute all tests in multiple threads:
+
 ### Install python-xdist
 
 ```shell
@@ -190,52 +185,11 @@ pytest -n 4
 
 ## Using Python Selenium with Pytest and SauceLabs
 
-Assuming that you have an account at [SauceLabs]() and that you have exported your credentials via your system's environmental variables:
+Assuming that you have an account at [SauceLabs](https://saucelabs.com/) and that you have exported your credentials via your system's environmental variables:
 
-File: test_SeleniumSauce.py
+File: [test_SeleniumSauce.py](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/tests/test_SeleniumSauce.py)
 
-```python
-import os
-
-import pytest
-
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-
-@pytest.fixture(scope='session')
-def browser():
-        desired_cap = {
-                'browserName': "chrome",
-                'platform': "macOS 10.12",
-                }
-        sauce_username = os.environ.get('SAUCE_USERNAME', None)
-        sauce_key = os.environ.get('SAUCE_KEY', None)
-        URL = 'http://{}:{}@ondemand.saucelabs.com:80/wd/hub'.format(
-                sauce_username,
-                sauce_key
-        )
-        browser = webdriver.Remote(
-                command_executor=URL,
-                desired_capabilities=desired_cap
-        )
-        yield browser
-        browser.quit()
-
-
-def test_PageTitle(browser):
-    browser.get('http://www.google.com')
-    assert 'Google' in browser.title
-
-
-def test_SearchPageTitle(browser):
-    browser.get('http://www.google.com')
-    assert 'Google' in browser.title
-    element = browser.find_element_by_id('lst-ib')
-    assert element is not None
-    element.send_keys('Red Hat' + Keys.RETURN)
-    assert browser.title.startswith('Red Hat')
-```
+![Selenium + SauceLabs](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/python_saucelabs.png)
 
 Now, execute it:
 
@@ -254,3 +208,6 @@ tests/test_SeleniumSauce.py::test_SearchPageTitle PASSED
 
 ============================= 2 passed in 15.89 seconds ==============================
 ```
+
+## Demo
+![Demo](https://omaciel.fedorapeople.org/videos/selenium_saucelabs.mov)
