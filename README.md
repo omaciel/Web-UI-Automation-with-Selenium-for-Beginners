@@ -32,7 +32,7 @@
 ![Selenium IDE](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/selenium_ide.png)
 
 ### Demo
-![Selenium IDE demo](https://youtu.be/e1jrrg39V_k)
+[Selenium IDE demo](https://youtu.be/e1jrrg39V_k)
 
 ### Export
 Selenium IDE will let you export your recording into Python code.
@@ -56,7 +56,7 @@ Selenium IDE will let you export your recording into Python code.
 ![Scirocco Recorder for Chrome](https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners/blob/master/images/scirocco.png)
 
 ### Demo
-![Scirocco demo](https://youtu.be/zEL6-pt9hoM)
+[Scirocco demo](https://youtu.be/zEL6-pt9hoM)
 
 ### Export
 Scirocco will let you export your recording.
@@ -111,8 +111,7 @@ Open a python shell:
 ```
 
 ## Demo
-![Demo](https://youtu.be/FQwwiVh5Cok)
-
+[Demo](https://youtu.be/FQwwiVh5Cok)
 
 ## Using Python Selenium with Unittest
 
@@ -210,4 +209,4 @@ tests/test_SeleniumSauce.py::test_SearchPageTitle PASSED
 ```
 
 ## Demo
-![Demo](https://youtu.be/dxr8lxTv90A)
+[Demo](https://youtu.be/dxr8lxTv90A)
