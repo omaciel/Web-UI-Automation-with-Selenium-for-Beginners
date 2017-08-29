@@ -9,6 +9,22 @@
 * Use **SauceLabs** to execute automated tests on multiple types of operating systems and web browser combinations.
 * Use **Travis** for a Continuous Integration/Delivery process
 
+## Follow Along
+
+You can get a copy of all files used in this tutorial by cloning this repository!
+
+```shell
+git clone https://github.com/omaciel/Web-UI-Automation-with-Selenium-for-Beginners.git
+```
+
+Then, make sure to install all the required Python modules using `pip`:
+
+```shell
+pip install -r requirements.txt
+```
+
+From this point onward you can follow along :)
+
 
 ## Using Selenium IDE
 
@@ -69,9 +85,10 @@ Now we will write actual python code to interact with a web browser.
 
 ### Install the selenium python module
 
+**NOTE**: This step can be skipped if you've cloned the repository and install all Python dependencies.
+
 ```shell
-mkvirtualenv -p $(which python3) -i selenium selenium-talk
-pip install bpython
+pip install selenium
 ```
 
 ### Install web driver
@@ -140,6 +157,8 @@ Let's do the same exercise, but this time using **pytest**
 
 ### Install pytest
 
+**NOTE**: This step can be skipped if you've cloned the repository and install all Python dependencies.
+
 ```shell
 pip install pytest
 ```
@@ -171,6 +190,8 @@ tests/test_SeleniumPytest.py::test_SearchPageTitle PASSED
 Now, let's execute all tests in multiple threads:
 
 ### Install python-xdist
+
+**NOTE**: This step can be skipped if you've cloned the repository and install all Python dependencies.
 
 ```shell
 pip install python-xdist
