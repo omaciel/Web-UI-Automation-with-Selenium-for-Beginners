@@ -1,0 +1,49 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "7777efbf0ab55015c8b8fd6dbb0c6ae2b17608cf952349035522db6f11719c66"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "apipkg": {
+            "hash": "sha256:65d2aa68b28e7d31233bb2ba8eb31cda40e4671f8ac2d6b241e358c9652a74b9",
+            "version": "==1.4"
+        },
+        "execnet": {
+            "hash": "sha256:d2b909c7945832e1c19cfacd96e78da68bdadc656440cfc7dfe59b766744eb8c",
+            "version": "==1.4.1"
+        },
+        "py": {
+            "hash": "sha256:2ccb79b01769d99115aa600d7eed99f524bf752bba8f041dc1c184853514655a",
+            "version": "==1.4.34"
+        },
+        "pytest": {
+            "hash": "sha256:82c1e44a964ec5922c7c3891787df31c8c4f18b6c97a722df56b6cf20bb38c8a",
+            "version": "==3.2.1"
+        },
+        "pytest-forked": {
+            "hash": "sha256:f275cb48a73fc61a6710726348e1da6d68a978f0ec0c54ece5a5fae5977e5a08",
+            "version": "==0.2"
+        },
+        "pytest-xdist": {
+            "hash": "sha256:7924d45c2430191fe3679a58116c74ceea13307d7822c169d65fd59a24b3a4fe",
+            "version": "==1.20.0"
+        },
+        "selenium": {
+            "hash": "sha256:69b479bdfa1ab2fee86a75086f7d5c6ef93cdad8cb6521cb0596554c6722f3eb",
+            "version": "==3.5.0"
+        },
+        "setuptools": {
+            "hash": "sha256:42bafe9efb8f771f6c96bb8e052e1de7474270719d471d596b9d91e53e8befd4",
+            "version": "==36.3.0"
+        }
+    },
+    "develop": {}
+}
