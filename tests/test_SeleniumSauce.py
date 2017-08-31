@@ -6,14 +6,35 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-@pytest.fixture(scope='session')
-def browser():
+BROWSERS = [
+        {
+            'browserName': 'chrome',
+            'platform': 'macOS 10.12',
+        },
+        {
+            'browserName': 'MicrosoftEdge',
+            'platform': 'Windows 10',
+        },
+        {
+            'browserName': 'firefox',
+            'platform': 'Linux',
+        },
+        {
+            'browserName': 'safari',
+            'platform': 'macOS 10.12',
+        },
+        {
+            'browserName': 'Android',
+            'deviceName': 'Google Nexus 7 HD Emulator',
+            'deviceOrientation': 'portrait',
+        },
+]
+
+
+@pytest.fixture(scope='session', params=BROWSERS)
+def browser(request):
     """Fixture to create a web browser."""
     # Let's use latest Chrome on MacOS 10.12
-    desired_cap = {
-            'browserName': "chrome",
-            'platform': "macOS 10.12",
-    }
     sauce_username = os.environ.get('SAUCE_USERNAME', None)
     sauce_key = os.environ.get('SAUCE_KEY', None)
 
@@ -27,7 +48,7 @@ def browser():
     )
     browser = webdriver.Remote(
             command_executor=URL,
-            desired_capabilities=desired_cap
+            desired_capabilities=request.param
     )
     yield browser
     browser.quit()
