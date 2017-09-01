@@ -30,7 +30,16 @@ BROWSERS = [
 ]
 
 
-@pytest.yield_fixture(scope='function', params=BROWSERS)
+def test_id(fixture_value):
+    """Return a human readable ID for a parameterized fixture."""
+    return '{browserName}'.format(**fixture_value)
+
+
+@pytest.yield_fixture(
+    scope='function',
+    params=BROWSERS,
+    ids=test_id,
+)
 def browser(request):
     """Fixture to create a web browser."""
     # Let's use latest Chrome on MacOS 10.12
@@ -45,19 +54,28 @@ def browser(request):
             sauce_username,
             sauce_key
     )
-    # Add build info for easy viewing on SauceLabs
     request.param['build'] = 'Web UI Automation with Selenium for Beginners'
     browser = webdriver.Remote(
             command_executor=URL,
             desired_capabilities=request.param
     )
-    yield browser
-    # Update SauceLabs test result
-    browser.execute_script(
-        "sauce:job-result=%s" % str(not request.node.rep_call.failed).lower())
-    browser.execute_script(
-        "sauce:job-name={}".format(request.node.rep_call.nodeid))
-    browser.quit()
+
+    def close_browser():
+        """Handle closing browser object."""
+        browser.quit()
+
+    def update_saucelabs():
+        """Add build info for easy viewing on SauceLabs."""
+        browser.execute_script(
+            "sauce:job-result={}".format(
+                str(not request.node.rep_call.failed).lower()))
+        browser.execute_script(
+            "sauce:job-name={}".format(request.node.rep_call.nodeid))
+
+    request.addfinalizer(update_saucelabs)
+    request.addfinalizer(close_browser)
+
+    return browser
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
