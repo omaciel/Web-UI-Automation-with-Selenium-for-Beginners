@@ -30,6 +30,28 @@ BROWSERS = [
 ]
 
 
+def pytest_addoption(parser):
+    """Add command line option to select webdriver capabilities.
+
+    These options can be used to choose the webdriver capabilites
+    as such:
+
+    browser_name = request.config.getoption('--webdriver')
+    """
+    parser.addoption(
+        '--browsername',
+        action="store",
+        default='firefox',
+        help="Specify the web browser to use for the automation."
+    )
+    parser.addoption(
+        '--platform',
+        action="store",
+        default='macOS 10.12',
+        help="Specify the platform to use for the automation."
+    )
+
+
 def test_id(fixture_value):
     """Return a human readable ID for a parameterized fixture."""
     return '{browserName}'.format(**fixture_value)
@@ -42,7 +64,6 @@ def test_id(fixture_value):
 )
 def browser(request):
     """Fixture to create a web browser."""
-    # Let's use latest Chrome on MacOS 10.12
     sauce_username = os.environ.get('SAUCE_USERNAME', None)
     sauce_key = os.environ.get('SAUCE_KEY', None)
 
