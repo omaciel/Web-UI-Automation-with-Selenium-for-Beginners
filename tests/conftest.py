@@ -42,12 +42,14 @@ def pytest_addoption(parser):
         '--browsername',
         action="store",
         default='firefox',
+        choices=['chrome', 'firefox', 'safari', 'Android', 'MicrosoftEdge']
         help="Specify the web browser to use for the automation."
     )
     parser.addoption(
         '--platform',
         action="store",
         default='macOS 10.12',
+        choices=['macOS 10.12', 'Windows 10', 'Linux']
         help="Specify the platform to use for the automation."
     )
 
