@@ -78,6 +78,9 @@ def browser(request):
             sauce_key
     )
     request.param['build'] = 'Web UI Automation with Selenium for Beginners'
+    request.param['acceptSslCerts'] = True
+    request.param['javascriptEnabled'] = True
+
     browser = webdriver.Remote(
             command_executor=URL,
             desired_capabilities=request.param
