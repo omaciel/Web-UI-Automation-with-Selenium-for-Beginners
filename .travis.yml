@@ -1,0 +1,14 @@
+language: python
+sudo: required
+python:
+  - "3.6"
+install:
+  - pip install -r requirements.txt
+script:
+  - pytest -v tests/test_SeleniumPytest.py
+
+dist: trusty
+addons:
+  chrome: stable
+before_install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
