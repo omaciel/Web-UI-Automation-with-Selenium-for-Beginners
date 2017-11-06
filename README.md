@@ -26,6 +26,27 @@ pip install -r requirements.txt
 From this point onward you can follow along :)
 
 
+## Using Jupyter Notebook
+
+You can also follow along using a **Jupyter Notebook**. See this helpfull [document](http://help.pythonanywhere.com/pages/IPythonNotebookVirtualenvs) explaining now to use a virtualenv in a Jupyter notebook
+
+* Install the ipython kernel module into your virtualenv
+
+```shell
+workon my-virtualenv-name  # activate your virtualenv, if you haven't already
+pip install ipykernel
+```
+
+* Now run the kernel "self-install" script:
+
+```shell
+python -m ipykernel install --user --name=my-virtualenv-name
+```
+
+Replacing the `--name` parameter as appropriate.
+
+* You should now be able to see your kernel in the IPython notebook menu: `Kernel -> Change kernel` and be able so switch to it (you may need to refresh the page before it appears in the list). IPython will remember which kernel to use for that notebook from then on.
+
 ## Using Selenium IDE
 
 ### Overview
@@ -85,7 +106,7 @@ Now we will write actual python code to interact with a web browser.
 
 ### Install the selenium python module
 
-**NOTE**: This step can be skipped if you've cloned the repository and install all Python dependencies.
+**NOTE**: This step can be skipped if you've cloned the repository and installed all Python dependencies.
 
 ```shell
 pip install selenium
